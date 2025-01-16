@@ -1,4 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
+import { ThemedText } from '../ThemedText';
+import { ThemedView } from '../ThemedView';
 
 export const Card = ({
   title,
@@ -8,16 +10,15 @@ export const Card = ({
   description: string;
 }) => {
   return (
-    <View style={styles.card}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.description}>{description}</Text>
-    </View>
+    <ThemedView style={styles.card}>
+      <ThemedText style={styles.title}>{title}</ThemedText>
+      <ThemedText style={styles.description}>{description}</ThemedText>
+    </ThemedView>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,

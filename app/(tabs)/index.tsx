@@ -1,17 +1,18 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
   SafeAreaView,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import { CardList } from '@/components/ui/CardList';
+import { ThemedText } from '@/components/ThemedText';
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
 
   return (
     <SafeAreaView style={[styles.container, { paddingBottom: insets.bottom }]}>
-      <Text style={styles.text}>Home Screen</Text>
+      <ThemedText style={styles.text}>Home Screen</ThemedText>
       <CardList />
     </SafeAreaView>
   );

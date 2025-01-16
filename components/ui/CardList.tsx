@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, StyleSheet, Button, View } from 'react-native';
+import { FlatList, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { Card } from './Card';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Colors } from '@/constants/Colors';
+import { useColorScheme } from '@/hooks/useColorScheme';
 
 interface Post {
   id: string;
@@ -21,9 +23,7 @@ interface ApiResponse {
 export const CardList = () => {
   const [data, setData] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
-  const tabHeight = useBottomTabBarHeight();
-  const insets = useSafeAreaInsets();
-  const paddingBottom = tabHeight + insets.bottom / 2;
+  const colorScheme = useColorScheme();
 
   const fetchData = async () => {
     setLoading(true);
@@ -44,6 +44,17 @@ export const CardList = () => {
     fetchData();
   }, []);
 
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator
+          size="large"
+          color={Colors[colorScheme ?? 'light'].tint}
+        />
+      </View>
+    );
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList
@@ -52,7 +63,7 @@ export const CardList = () => {
           <Card title={item.header} description={item.text} />
         )}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={[styles.contentContainer]}
+        contentContainerStyle={styles.contentContainer}
       />
     </View>
   );
@@ -60,6 +71,11 @@ export const CardList = () => {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    padding: 16,
+    paddingBottom: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
