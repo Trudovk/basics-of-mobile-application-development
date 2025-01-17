@@ -10,6 +10,8 @@ interface Post {
   id: string;
   header: string;
   text: string;
+  image?: string;
+  collectionId: string;
 }
 
 interface ApiResponse {
@@ -60,7 +62,15 @@ export const CardList = () => {
       <FlatList
         data={data}
         renderItem={({ item }) => (
-          <Card title={item.header} description={item.text} />
+          <Card
+            title={item.header}
+            description={item.text}
+            img={
+              item.image
+                ? `https://pocketbase-front-323.fjx.su/api/files/${item.collectionId}/${item.id}/${item.image}`
+                : undefined
+            }
+          />
         )}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.contentContainer}
