@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Switch, Appearance, View } from 'react-native';
+import { StyleSheet, Switch, Appearance, View, Platform } from 'react-native';
 import {
   useSafeAreaInsets,
   SafeAreaView,
@@ -7,6 +7,7 @@ import {
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
+import * as Haptics from 'expo-haptics';
 
 export default function Settings() {
   const insets = useSafeAreaInsets();
@@ -22,6 +23,12 @@ export default function Settings() {
     const newScheme = isTheme ? 'light' : 'dark';
     setTheme(!isTheme);
     Appearance.setColorScheme(newScheme);
+
+    if (Platform.OS === 'ios') {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    } else if (Platform.OS === 'android') {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    }
   };
 
   return (
