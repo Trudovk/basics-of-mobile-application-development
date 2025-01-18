@@ -1,31 +1,39 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { ThemedText } from '../ThemedText';
 import { ThemedView } from '../ThemedView';
+import { Link } from 'expo-router';
 
 export const Card = ({
+  id,
   title,
   description,
   img,
 }: {
+  id: string;
   title: string;
   description: string;
   img?: string;
 }) => {
   return (
-    <ThemedView style={styles.card}>
-      {img && <Image source={{ uri: img }} style={styles.image} />}
-      <View style={styles.textconteiner}>
-        <ThemedText style={styles.title}>{title}</ThemedText>
-        <ThemedText style={styles.description}>{description}</ThemedText>
-      </View>
-    </ThemedView>
+    <Link href={`/posts/${id}`} style={styles.link}>
+      <ThemedView style={styles.card}>
+        {img && <Image source={{ uri: img }} style={styles.image} />}
+        <View style={styles.textconteiner}>
+          <ThemedText style={styles.title}>{title}</ThemedText>
+          <ThemedText style={styles.description}>{description}</ThemedText>
+        </View>
+      </ThemedView>
+    </Link>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
+  link: {
     marginVertical: 8,
-    marginHorizontal: 16,
+    marginHorizontal: 8,
+  },
+  card: {
+    width: '100%',
     borderRadius: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Switch, Appearance } from 'react-native';
+import { StyleSheet, Switch, Appearance, View } from 'react-native';
 import {
   useSafeAreaInsets,
   SafeAreaView,
@@ -25,13 +25,12 @@ export default function Settings() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ThemedText style={styles.text}>Settings</ThemedText>
+    <View style={styles.container}>
       <ThemedView style={styles.switchContainer}>
         <ThemedText style={styles.switchLabel}>Dark Mode</ThemedText>
         <Switch onValueChange={toggleSwitch} value={isTheme} />
       </ThemedView>
-    </SafeAreaView>
+    </View>
   );
 }
 

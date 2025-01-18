@@ -5,8 +5,9 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { Link } from 'expo-router';
 
-interface Post {
+export interface Post {
   id: string;
   header: string;
   text: string;
@@ -63,6 +64,7 @@ export const CardList = () => {
         data={data}
         renderItem={({ item }) => (
           <Card
+            id={item.id}
             title={item.header}
             description={item.text}
             img={
@@ -80,6 +82,10 @@ export const CardList = () => {
 };
 
 const styles = StyleSheet.create({
+  cardContainer: {
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
   contentContainer: {
     paddingBottom: 16,
   },
