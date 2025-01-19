@@ -1,11 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CardList } from '@/components/ui/CardList';
-import { ThemedText } from '@/components/ThemedText';
+
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 export default function HomeScreen() {

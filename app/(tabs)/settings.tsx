@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Switch, Appearance, View, Platform } from 'react-native';
-import {
-  useSafeAreaInsets,
-  SafeAreaView,
-} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import * as Haptics from 'expo-haptics';
 
 export default function Settings() {
-  const insets = useSafeAreaInsets();
   const colorScheme = useColorScheme();
   const [isTheme, setTheme] = useState(colorScheme === 'dark');
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image, ActivityIndicator } from 'react-native';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Redirect, Stack, useLocalSearchParams } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
@@ -33,21 +33,20 @@ export default function PostScreen() {
 
   if (loading) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator
-          size="large"
-          color={Colors[colorScheme ?? 'light'].tint}
-        />
-      </View>
+      <>
+        <Stack.Screen options={{ title: 'Loading...' }} />
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator
+            size="large"
+            color={Colors[colorScheme ?? 'light'].tint}
+          />
+        </View>
+      </>
     );
   }
 
-  if (!post) {
-    return (
-      <ThemedView style={styles.container}>
-        <ThemedText>Post not found</ThemedText>
-      </ThemedView>
-    );
+  if (!post || !post.id) {
+    return <Redirect href="/+not-found" />;
   }
 
   return (

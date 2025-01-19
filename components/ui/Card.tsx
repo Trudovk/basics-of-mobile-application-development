@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { ThemedText } from '../ThemedText';
 import { ThemedView } from '../ThemedView';
 import { Link } from 'expo-router';
@@ -14,13 +14,21 @@ export const Card = ({
   description: string;
   img?: string;
 }) => {
+  const maxLength = 200;
+  const truncatedDescription =
+    description.length > maxLength
+      ? `${description.substring(0, maxLength)} ...`
+      : description;
+
   return (
     <Link href={`/posts/${id}`} style={styles.link}>
       <ThemedView style={styles.card}>
         {img && <Image source={{ uri: img }} style={styles.image} />}
         <View style={styles.textconteiner}>
           <ThemedText style={styles.title}>{title}</ThemedText>
-          <ThemedText style={styles.description}>{description}</ThemedText>
+          <ThemedText style={styles.description}>
+            {truncatedDescription}
+          </ThemedText>
         </View>
       </ThemedView>
     </Link>

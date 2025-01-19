@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { Card } from './Card';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { Link } from 'expo-router';
 
 export interface Post {
   id: string;
