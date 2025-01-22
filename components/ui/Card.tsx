@@ -8,22 +8,30 @@ export const Card = ({
   title,
   description,
   img,
+  testID,
 }: {
   id: string;
   title: string;
   description: string;
   img?: string;
+  testID?: string;
 }) => {
   const maxLength = 200;
   const truncatedDescription =
     description.length > maxLength
-      ? `${description.substring(0, maxLength)} ...`
+      ? `${description.substring(0, maxLength)}...`
       : description;
 
   return (
-    <Link href={`/posts/${id}`} style={styles.link}>
+    <Link href={`/posts/${id}`} style={styles.link} testID={testID}>
       <ThemedView style={styles.card}>
-        {img && <Image source={{ uri: img }} style={styles.image} />}
+        {img && (
+          <Image
+            source={{ uri: img }}
+            style={styles.image}
+            testID={`card-image-${id}`}
+          />
+        )}
         <View style={styles.textconteiner}>
           <ThemedText style={styles.title}>{title}</ThemedText>
           <ThemedText style={styles.description}>

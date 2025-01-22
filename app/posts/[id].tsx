@@ -6,30 +6,13 @@ import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Post } from '@/components/ui/CardList';
+import { usePost } from '@/hooks/usePosts';
 
 export default function PostScreen() {
   const { id } = useLocalSearchParams();
-  const [post, setPost] = useState<Post | null>(null);
-  const [loading, setLoading] = useState(true);
   const colorScheme = useColorScheme();
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const response = await fetch(
-          `https://pocketbase-front-323.fjx.su/api/collections/posts/records/${id}`,
-        );
-        const result = await response.json();
-        setPost(result);
-      } catch (error) {
-        console.error('Error fetching post:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPost();
-  }, [id]);
+  const { loading, data: post } = usePost(id.toString());
 
   if (loading) {
     return (
@@ -56,7 +39,7 @@ export default function PostScreen() {
         {post.image && (
           <Image
             source={{
-              uri: `https://pocketbase-front-323.fjx.su/api/files/${post.collectionId}/${post.id}/${post.image}`,
+              uri: post.image,
             }}
             style={styles.image}
           />

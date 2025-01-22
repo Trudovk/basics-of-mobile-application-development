@@ -3,6 +3,8 @@ import { FlatList, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { Card } from './Card';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { usePosts } from '@/hooks/usePosts';
+import { ThemedText } from '../ThemedText';
 
 export interface Post {
   id: string;
@@ -12,7 +14,7 @@ export interface Post {
   collectionId: string;
 }
 
-interface ApiResponse {
+export interface ApiResponse {
   items: Post[];
   page: number;
   perPage: number;
@@ -21,36 +23,25 @@ interface ApiResponse {
 }
 
 export const CardList = () => {
-  const [data, setData] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(false);
   const colorScheme = useColorScheme();
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        'https://pocketbase-front-323.fjx.su/api/collections/posts/records',
-      );
-      const result: ApiResponse = await response.json();
-      setData(result.items);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { data, loading, error } = usePosts();
 
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator
+          testID="loading-indicator"
           size="large"
           color={Colors[colorScheme ?? 'light'].tint}
         />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <ThemedText>Failed to load posts</ThemedText>
       </View>
     );
   }
@@ -64,11 +55,8 @@ export const CardList = () => {
             id={item.id}
             title={item.header}
             description={item.text}
-            img={
-              item.image
-                ? `https://pocketbase-front-323.fjx.su/api/files/${item.collectionId}/${item.id}/${item.image}`
-                : undefined
-            }
+            img={item.image}
+            testID={`card-${item.id}`}
           />
         )}
         keyExtractor={(item) => item.id}
@@ -87,6 +75,11 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
