@@ -24,4 +24,8 @@ export const API = {
     );
     return res;
   },
+  getImageUrl: (res: { collectionId: string; id: string; image?: string }) =>
+    res.image
+      ? `${API.root}/api/files/${res.collectionId}/${res.id}/${res.image}`
+      : undefined,
 };

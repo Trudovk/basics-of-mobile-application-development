@@ -7,6 +7,7 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Post } from '@/components/ui/CardList';
 import { usePost } from '@/hooks/usePosts';
+import { API } from '@/lib/api';
 
 export default function PostScreen() {
   const { id } = useLocalSearchParams();
@@ -39,7 +40,7 @@ export default function PostScreen() {
         {post.image && (
           <Image
             source={{
-              uri: post.image,
+              uri: API.getImageUrl(post),
             }}
             style={styles.image}
           />

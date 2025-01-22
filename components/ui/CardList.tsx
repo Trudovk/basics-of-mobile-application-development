@@ -5,6 +5,7 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { usePosts } from '@/hooks/usePosts';
 import { ThemedText } from '../ThemedText';
+import { API } from '@/lib/api';
 
 export interface Post {
   id: string;
@@ -45,7 +46,6 @@ export const CardList = () => {
       </View>
     );
   }
-
   return (
     <View style={{ flex: 1 }}>
       <FlatList
@@ -55,7 +55,7 @@ export const CardList = () => {
             id={item.id}
             title={item.header}
             description={item.text}
-            img={item.image}
+            img={API.getImageUrl(item)}
             testID={`card-${item.id}`}
           />
         )}
